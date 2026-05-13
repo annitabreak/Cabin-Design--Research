@@ -40,6 +40,7 @@ type LayoutType =
   | 'comparison' 
   | 'bento' 
   | 'data' 
+  | 'medical-data'
   | 'quote' 
   | 'flow' 
   | 'grid'
@@ -166,6 +167,20 @@ const slides: SlideData[] = [
   },
   {
     id: 9,
+    section: "MEDICAL EVIDENCE",
+    title: "临床数据：久坐对下肢循环的生理损害",
+    layout: "medical-data",
+    bgType: "soft",
+    content: [
+      "连续静坐会降低下肢血流剪切率与血管舒张功能。",
+      "即使轻微活动也能明显减少腿部肿胀。",
+      "飞行时间超过 4-8 小时，VTE 风险显著上升。"
+    ],
+    visualDesc: "生理循环与血栓风险分析",
+    footer: "02 用户研究"
+  },
+  {
+    id: 10,
     section: "EXPLORATION",
     title: "迭代过程：被弃用的硬性路径",
     layout: "comparison",
@@ -178,7 +193,7 @@ const slides: SlideData[] = [
     footer: "03 方案探索"
   },
   {
-    id: 10,
+    id: 11,
     section: "STRATEGY",
     title: "路径切换：从独立构件到系统置换",
     layout: "flow",
@@ -192,7 +207,7 @@ const slides: SlideData[] = [
     footer: "03 方案探索"
   },
   {
-    id: 11,
+    id: 12,
     section: "SYSTEM",
     title: "最终方案：窄体机抗疲劳交互系统",
     layout: "section",
@@ -202,7 +217,7 @@ const slides: SlideData[] = [
     footer: "04 最终方案"
   },
   {
-    id: 12,
+    id: 13,
     section: "HARDWARE",
     title: "核心构件：张力腿部支撑面",
     layout: "split",
@@ -216,7 +231,7 @@ const slides: SlideData[] = [
     footer: "04 方案详情"
   },
   {
-    id: 13,
+    id: 14,
     section: "STORAGE",
     title: "空间极致：零入侵的收纳逻辑",
     layout: "split",
@@ -229,7 +244,7 @@ const slides: SlideData[] = [
     footer: "04 方案详情"
   },
   {
-    id: 14,
+    id: 15,
     section: "INTERACTION",
     title: "BYOD 岛：重定义的椅背界面",
     layout: "bento",
@@ -243,7 +258,7 @@ const slides: SlideData[] = [
     footer: "05 交互逻辑"
   },
   {
-    id: 15,
+    id: 16,
     section: "SCENARIO",
     title: "情境管理：发餐与休憩的引导",
     layout: "flow",
@@ -257,7 +272,7 @@ const slides: SlideData[] = [
     footer: "05 交互逻辑"
   },
   {
-    id: 16,
+    id: 17,
     section: "SAFETY",
     title: "安全第一：情境驱动的复位干预",
     layout: "grid",
@@ -271,7 +286,7 @@ const slides: SlideData[] = [
     footer: "05 交互逻辑"
   },
   {
-    id: 17,
+    id: 18,
     section: "VALUE",
     title: "系统价值：多方共赢的平衡",
     layout: "grid",
@@ -285,7 +300,7 @@ const slides: SlideData[] = [
     footer: "06 价值总结"
   },
   {
-    id: 18,
+    id: 19,
     section: "SUMMARY",
     title: "变革：从座椅硬件到行为接口",
     layout: "end",
@@ -394,7 +409,7 @@ const LayoutWrapper = ({ slide, children }: { slide: SlideData, children: React.
                <span className="font-bold">2026</span>
                <div className="h-[1px] w-12 bg-current opacity-30" />
             </div>
-            <span className="opacity-40">0{slide.id} / 18</span>
+            <span className="opacity-40">{slide.id.toString().padStart(2, '0')} / {slides.length}</span>
          </div>
       </div>
     </div>
@@ -497,6 +512,166 @@ const Split = ({ slide }: { slide: SlideData }) => (
     </div>
   </div>
 );
+
+const MedicalDataLayout = ({ slide }: { slide: SlideData }) => {
+  const chart1Data = [
+    { x: 0, v: 100, f: 100 },
+    { x: 60, v: 89, f: 95 },
+    { x: 120, v: 78, f: 88 },
+    { x: 180, v: 70, f: 82 },
+  ];
+
+  const chart2Data = [
+    { label: "静止不动", value: 1.32, color: "#e53e3e" },
+    { label: "踝关节运动", value: 0.80, color: "#4a7c92" },
+    { label: "髋部运动", value: 0.61, color: "#2d333b" },
+  ];
+
+  return (
+    <div className="flex-1 flex flex-col gap-10">
+      <div className="flex justify-between items-end">
+        <div className="space-y-2">
+          <div className="w-16 h-1.5 bg-[#4a7c92] rounded-full" />
+          <h2 className="text-5xl font-black tracking-tight">{slide.title}</h2>
+        </div>
+        <div className="flex items-center gap-4 text-[10px] font-black opacity-30 tracking-[0.2em]">
+          <Activity size={16} />
+          <span>PHYSIOLOGICAL STRESS ANALYSIS</span>
+        </div>
+      </div>
+
+      <div className="flex-1 grid grid-cols-12 gap-8 min-h-0">
+        {/* Chart 1: Line Chart */}
+        <div className="col-span-12 lg:col-span-5 bg-white/60 backdrop-blur-xl rounded-[2.5rem] p-10 border border-white/80 shadow-xl flex flex-col">
+          <div className="flex justify-between items-start mb-10">
+            <div>
+              <p className="text-sm font-black uppercase tracking-wider mb-1">图表 1 | 久坐导致下肢血流功能下降</p>
+              <p className="text-[10px] text-zinc-400 font-medium">来源：Restaino et al., 2015</p>
+            </div>
+          </div>
+          
+          <div className="flex-1 relative mt-4">
+            <svg viewBox="0 0 300 150" className="w-full h-full overflow-visible">
+              {/* Grid Lines */}
+              {[0, 25, 50, 75, 100].map(v => (
+                <line key={v} x1="0" y1={150 - v*1.5} x2="300" y2={150 - v*1.5} stroke="#000" strokeOpacity="0.05" strokeWidth="1" />
+              ))}
+              {/* Chart Lines */}
+              <motion.path 
+                initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, ease: "easeInOut" }}
+                d={`M ${chart1Data.map((d, i) => `${(i/3)*300} ${150 - d.v*1.5}`).join(' L ')}`}
+                fill="none" stroke="#4a7c92" strokeWidth="3" strokeLinecap="round"
+              />
+              <motion.path 
+                initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
+                d={`M ${chart1Data.map((d, i) => `${(i/3)*300} ${150 - d.f*1.5}`).join(' L ')}`}
+                fill="none" stroke="#e53e3e" strokeWidth="3" strokeDasharray="4 4" opacity="0.4"
+              />
+              {/* Dots */}
+              {chart1Data.map((d, i) => (
+                <circle key={i} cx={(i/3)*300} cy={150 - d.v*1.5} r="4" fill="white" stroke="#4a7c92" strokeWidth="2" />
+              ))}
+            </svg>
+            <div className="absolute bottom-[-25px] left-0 right-0 flex justify-between text-[8px] font-bold opacity-30">
+               <span>0 min</span>
+               <span>60 min</span>
+               <span>120 min</span>
+               <span>180 min</span>
+            </div>
+          </div>
+
+          <div className="mt-12 space-y-3">
+             <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-[#4a7c92]" />
+                <p className="text-[11px] font-bold opacity-60">血管舒张功能 (FMD) 每小时下降 5.6%</p>
+             </div>
+             <p className="text-[10px] leading-relaxed opacity-40">长时间静坐会持续降低血流剪切率与血管舒张功能，下肢血栓风险在 3 小时内持续累积。</p>
+          </div>
+        </div>
+
+        {/* Chart 2: Bar Chart */}
+        <div className="col-span-12 lg:col-span-4 bg-white/60 backdrop-blur-xl rounded-[2.5rem] p-10 border border-white/80 shadow-xl flex flex-col">
+          <div className="flex justify-between items-start mb-10">
+            <div>
+              <p className="text-sm font-black uppercase tracking-wider mb-1">图表 2 | 不同状态对腿部肿胀影响</p>
+              <p className="text-[10px] text-zinc-400 font-medium tracking-tight">小腿围增长率 (%) | Seo et al., 2012</p>
+            </div>
+          </div>
+
+          <div className="flex-1 flex flex-col justify-center gap-8">
+             {chart2Data.map((d, i) => (
+               <div key={i} className="space-y-2">
+                  <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest opacity-60">
+                    <span>{d.label}</span>
+                    <span className="text-zinc-900">{d.value}%</span>
+                  </div>
+                  <div className="h-4 bg-zinc-100 rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }} 
+                      animate={{ width: `${(d.value / 1.5) * 100}%` }} 
+                      transition={{ delay: i * 0.2, duration: 1, ease: "easeOut" }}
+                      className="h-full rounded-full"
+                      style={{ backgroundColor: d.color }}
+                    />
+                  </div>
+               </div>
+             ))}
+          </div>
+
+          <div className="mt-8 pt-8 border-t border-zinc-100 flex items-start gap-3">
+             <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center shrink-0">
+               <AlertCircle size={16} className="text-orange-600" />
+             </div>
+             <p className="text-[10px] leading-relaxed opacity-60">即便极轻微运动也能减少约 <span className="font-bold text-zinc-900">40%-54%</span> 的液体聚集，久坐则是水肿的主因。</p>
+          </div>
+        </div>
+
+        {/* Chart 3: VTE Risk */}
+        <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
+           <div className="flex-1 bg-[#1a2b3c] text-white rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden relative group">
+              <div className="relative z-10">
+                <p className="text-xs font-black tracking-[0.2em] uppercase opacity-40 mb-6">Chart 3 | VTE Risk Elevation</p>
+                <div className="space-y-6">
+                   <div className="flex items-center justify-between">
+                      <span className="text-[10px] opacity-40 uppercase font-bold tracking-widest">Flight Time</span>
+                      <span className="text-[10px] opacity-40 uppercase font-bold tracking-widest">Risk Change</span>
+                   </div>
+                   <div className="h-px bg-white/10" />
+                   {[
+                     { t: "< 4h", r: "较低风险", pulse: false },
+                     { t: "> 4h", r: "风险上升", pulse: true },
+                     { t: "> 8h", r: "中等风险 (0.5%)", pulse: true, color: "#f87171" }
+                   ].map((item, i) => (
+                     <div key={i} className="flex items-center justify-between">
+                        <span className="text-sm font-black">{item.t}</span>
+                        <div className="flex items-center gap-2">
+                           {item.pulse && <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", i === 1 ? "bg-yellow-400" : "bg-red-500")} />}
+                           <span className="text-xs font-bold" style={{ color: item.color || undefined, opacity: item.color ? 1 : 0.6 }}>{item.r}</span>
+                        </div>
+                     </div>
+                   ))}
+                </div>
+              </div>
+              <div className="mt-8 py-4 px-6 bg-white/5 rounded-2xl border border-white/10">
+                 <p className="text-[10px] leading-tight opacity-50 italic">长时间跨洲际旅行，整体血栓风险增加 <span className="text-white opacity-100 font-black">2–4</span> 倍。</p>
+              </div>
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl" />
+           </div>
+
+           <div className="bg-[#cbdbe6] rounded-[2.5rem] p-8 flex items-center gap-6">
+              <div className="w-14 h-14 bg-white/50 rounded-2xl flex items-center justify-center shrink-0">
+                 <CheckCircle2 size={24} className="text-[#1a2b3c]" />
+              </div>
+              <div className="space-y-1">
+                 <p className="text-[10px] font-black uppercase tracking-widest opacity-40 leading-none">Recommendation</p>
+                 <p className="text-sm font-black text-[#1a2b3c]">下肢微抬可显著加速血液流回心脏，降低末梢血管压力。</p>
+              </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Bento = ({ slide }: { slide: SlideData }) => (
   <div className="flex-1 grid grid-cols-12 grid-rows-6 gap-8">
@@ -763,6 +938,7 @@ export default function App() {
       case 'flow': return <FlowLayout slide={slide} />;
       case 'grid': return <GridLayout slide={slide} />;
       case 'comparison': return <ComparisonLayout slide={slide} />;
+      case 'medical-data': return <MedicalDataLayout slide={slide} />;
       case 'end': return <EndLayout slide={slide} />;
       default: return null;
     }
